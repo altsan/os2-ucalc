@@ -8,7 +8,7 @@ WATCOM=$(%WATCOM)
 CC    = wcc386
 CC16  = wcc
 LINK  = wlink
-RC    = wrc
+RC    = rc
 
 # MAKEDESC.CMD (from NetLabs) should be somewhere on PATH
 MAKEDESC  = makedesc.cmd
@@ -66,14 +66,14 @@ ICONS  = graphics/calc.ico   $
        $(CC) $(CFLAGS) $[@
 
 .rc.res: .autodepend
-  $(RC) -q -r -fo=$^@ $[@
+  $(RC) -n -r $[@ $^@ 
 
 all: $(NAME).exe
 
 $(NAME).exe: $(OBJS) $(NAME).lrf $(NAME).res $(__MAKEFILES__)
        -$(MAKEDESC) -N$(BL_VENDOR) -D$(BL_DESC) -V"$#define=SZ_VERSION,$(NAME).h" $(NAME).lrf
        $(LINK) @$(NAME).lrf
-       $(RC) -q $(NAME).res $^@
+       $(RC) -n -x $(NAME).res $^@
 !ifndef DEBUG
        lxlite $^@
 !endif
