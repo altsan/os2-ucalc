@@ -1,0 +1,102 @@
+#include <os2.h>
+#include "ids.h"
+
+POINTER ID_UCALC    "graphics\\calc.ico"
+DEFAULTICON         "graphics\\calc.ico"
+
+ICON 10             "graphics\\off.ico"
+
+#ifndef NO_BUTTON_ICONS
+ICON 11             "graphics\\pi.ico"
+ICON 12             "graphics\\square.ico"
+ICON 13             "graphics\\expn.ico"
+ICON 14             "graphics\\sqroot.ico"
+ICON 15             "graphics\\nroot.ico"
+ICON 16             "graphics\\fact.ico"
+ICON 17             "graphics\\rcp.ico"
+ICON 18             "graphics\\log.ico"
+ICON 19             "graphics\\ln.ico"
+ICON 20             "graphics\\ex.ico"
+
+ICON 31             "graphics\\pi_l.ico"
+ICON 32             "graphics\\square_l.ico"
+ICON 33             "graphics\\expn_l.ico"
+ICON 34             "graphics\\sqroot_l.ico"
+ICON 35             "graphics\\nroot_l.ico"
+ICON 36             "graphics\\fact_l.ico"
+ICON 37             "graphics\\rcp_l.ico"
+ICON 38             "graphics\\log_l.ico"
+ICON 39             "graphics\\ln_l.ico"
+ICON 40             "graphics\\ex_l.ico"
+#endif
+
+MENU ID_UCALC
+BEGIN
+    SUBMENU "~File",                                IDM_FILE,           MIS_TEXT
+    BEGIN
+        MENUITEM "E~xit",                           ID_EXIT,            MIS_TEXT
+    END
+    SUBMENU "~View",                                IDM_VIEW,           MIS_TEXT
+    BEGIN
+/*
+        MENUITEM "~Hex field",                      ID_VIEWHEX,         MIS_TEXT, MIA_CHECKED
+        MENUITEM SEPARATOR
+        MENUITEM "Algebraic ~functions",            ID_VIEWFUNC,        MIS_TEXT, MIA_CHECKED
+        MENUITEM "~Bit operations",                 ID_VIEWBITS,        MIS_TEXT, MIA_CHECKED
+        MENUITEM SEPARATOR
+*/
+        SUBMENU "~Appearance",                      IDM_LOOK,           MIS_TEXT
+        BEGIN
+            MENUITEM "~Small text",                 ID_SMALL,           MIS_TEXT, MIA_CHECKED
+            MENUITEM "~Large text",                 ID_LARGE,           MIS_TEXT
+            MENUITEM SEPARATOR
+            MENUITEM "~Colour",                     ID_CLRLIGHT,        MIS_TEXT, MIA_CHECKED
+            MENUITEM "~Monochrome",                 ID_CLRMONO,         MIS_TEXT
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Always on ~top",                  ID_VIEWONTOP,       MIS_TEXT
+    END
+    SUBMENU "~Help",                                IDM_HELP,           MIS_TEXT
+    BEGIN
+        MENUITEM "Product ~information",            ID_ABOUT,           MIS_TEXT
+    END
+END
+
+ACCELTABLE ID_UCALC
+BEGIN
+    VK_F3,        ID_EXIT,      VIRTUALKEY
+    "0",          IDD_ZERO,     CHAR
+    "1",          IDD_ONE,      CHAR
+    "2",          IDD_TWO,      CHAR
+    "3",          IDD_THREE,    CHAR
+    "4",          IDD_FOUR,     CHAR
+    "5",          IDD_FIVE,     CHAR
+    "6",          IDD_SIX,      CHAR
+    "7",          IDD_SEVEN,    CHAR
+    "8",          IDD_EIGHT,    CHAR
+    "9",          IDD_NINE,     CHAR
+    ".",          IDD_DECIMAL,  CHAR
+    "+",          IDD_PLUS,     CHAR
+    "-",          IDD_MINUS,    CHAR
+    "*",          IDD_MULTIPLY, CHAR
+    "/",          IDD_DIVIDE,   CHAR
+    VK_ENTER,     IDD_EQUALS,   VIRTUALKEY
+/*
+    VK_INSERT,    IDD_ZERO,     VIRTUALKEY
+    VK_END,       IDD_ONE,      VIRTUALKEY
+    VK_DOWN,      IDD_TWO,      VIRTUALKEY
+    VK_PAGEDOWN,  IDD_THREE,    VIRTUALKEY
+    VK_LEFT,      IDD_FOUR,     VIRTUALKEY
+    VK_RIGHT,     IDD_SIX,      VIRTUALKEY
+    VK_HOME,      IDD_SEVEN,    VIRTUALKEY
+    VK_UP,        IDD_EIGHT,    VIRTUALKEY
+    VK_PAGEUP,    IDD_NINE,     VIRTUALKEY
+*/
+    VK_NEWLINE,   IDD_EQUALS,   VIRTUALKEY
+    VK_BACKSPACE, IDD_BACK,     VIRTUALKEY
+    VK_BACKSPACE, IDD_CE,       VIRTUALKEY, CONTROL
+    VK_DELETE,    IDD_CLEAR,    VIRTUALKEY, CONTROL
+END
+
+RCINCLUDE ucalc.dlg
+

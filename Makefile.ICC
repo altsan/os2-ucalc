@@ -1,0 +1,54 @@
+# IBM C/C++ (VisualAge) Makefile for UCALC
+
+CC     = icc.exe
+RC     = rc.exe
+LINK   = ilink.exe
+IPFC   = ipfc.exe
+CFLAGS = /Gm /Ss /Wuse      # /Wrea /Wuni
+RFLAGS = -x -n
+LFLAGS = /NOE /PMTYPE:PM /NOLOGO /MAP
+NAME   = ucalc
+OBJS   = $(NAME).obj
+
+ICONS  = graphics/calc.ico   \
+         graphics/off.ico    \
+         graphics/expn.ico   graphics/expn_l.ico   \
+         graphics/ln.ico     graphics/ln_l.ico     \
+         graphics/log.ico    graphics/log_l.ico    \
+         graphics/rcp.ico    graphics/rcp_l.ico    \
+         graphics/sqroot.ico graphics/sqroot_l.ico \
+         graphics/square.ico graphics/square_l.ico \
+         graphics/nroot.ico  graphics/nroot_l.ico
+
+# Set DEBUG=1 (command line or environment) to build with debug symbols
+!ifdef DEBUG
+    CFLAGS   = $(CFLAGS) /Ti /Tm
+    LFLAGS   = $(LFLAGS) /DEBUG
+!endif
+
+# Set NOICONS=1 to use Unicode text instead of icons on algebra buttons (experimental)
+!ifdef NOICONS
+    CFLAGS   = $(CFLAGS) /DNO_BUTTON_ICONS
+    RFLAGS   = $(RFLAGS) -DNO_BUTTON_ICONS
+!endif
+
+
+all         : $(NAME).exe       # $(NAME).hlp
+
+$(NAME).exe : $(OBJS) $(NAME).h ids.h $(NAME).res
+                makedesc -D"Useful Calculator" -N"Alexander Taylor" -V"^#define=SZ_VERSION,$(NAME).h" $(NAME).def
+                $(LINK) $(LFLAGS) $(OBJS) $(LIBS) $(NAME).def
+                $(RC) $(RFLAGS) $(NAME).res $@
+                %ifndef DEBUG
+                    lxlite $@
+                %endif
+
+$(NAME).res : $(NAME).rc $(NAME).dlg ids.h $(ICONS)
+                $(RC) $(RFLAGS) -r $(NAME).rc $@
+
+# $(NAME).hlp : {$(NLV)}$(NAME).ipf
+#                 $(IPFC) -d:$(NLV) $< $@
+
+clean       :
+                del $(OBJS) $(NAME).res $(NAME).exe >NUL
+
