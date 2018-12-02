@@ -1,9 +1,36 @@
 Useful Calculator for OS/2
 ==========================
 
-  Useful Calculator (UCALC) is a simple desktop calculator for OS/2,
-  using the native Presentation Manager API.  It has no external
-  dependencies and should work on all OS/2 Warp systems.
+_Useful Calculator_ is a simple desktop calculator for OS/2, written
+using the native Presentation Manager API.  It has no external
+dependencies and should work on all OS/2 Warp systems.
+
+
+Functionality
+-------------
+
+The calculator functions are arranged in three groups:
+
+ * Numbers and basic arithmetic operations (addition, subtraction,
+   multiplication, division, and modulo/remainder), as well as simple
+   memory operations.
+
+ * Algebraic functions (pi, square, exponent-n, square root, n-root, 
+   reciprocal, base-10 logarithm, and natural logarithm).  
+
+ * Bitwise (binary logic) operations: OR, AND, eXclusive OR, NOT (i.e.
+   ones-complement negation), left bit-shift, and right bit-shift.
+
+Only decimal input is supported, but the hexadecimal equivalent of the
+currently-displayed value (integer portion only) is shown under the 
+input area.  (Negative numbers are shown in 32-bit twos-complement form
+for values up to negative 0xFFFFFFFF, and 64-bit twos-complement form
+for higher-magnitude negative values.)
+
+Mathematical order of operations is observed.  For example, entering 
+`5 [+] 2 [×] 3 [xⁿ] 3` will be evaluated as `5 + (2 × 3³)`, yielding a 
+result of `59`.
+
 
 Notices
 -------
