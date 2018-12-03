@@ -269,8 +269,15 @@ MRESULT EXPENTRY MainWndProc( HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2 )
                     }
                     break;
 
-                case ID_ABOUT:                  // Product information dialog
-                    WinDlgBox( HWND_DESKTOP, hwnd, (PFNWP) AboutDlgProc, 0, IDD_ABOUT, NULL );
+                // Menu commands
+                //
+
+                case ID_COPY:
+                    DoCopy( hwnd );
+                    break;
+
+                case ID_PASTE:
+                    DoPaste( hwnd );
                     break;
 
                 case ID_VIEWONTOP:
@@ -303,6 +310,9 @@ MRESULT EXPENTRY MainWndProc( HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2 )
                     SetColourScheme( hwnd, pGlobal );
                     break;
 
+                case ID_ABOUT:                  // Product information dialog
+                    WinDlgBox( HWND_DESKTOP, hwnd, (PFNWP) AboutDlgProc, 0, IDD_ABOUT, NULL );
+                    break;
 
                 case ID_EXIT:                   // Exit the program
                     WinPostMsg( hwnd, WM_CLOSE, 0, 0 );
@@ -870,6 +880,59 @@ void SetTopmost( HWND hwnd )
 
 /* ------------------------------------------------------------------------- *
  * ------------------------------------------------------------------------- */
+void DoCopy( HWND hwnd )
+{
+    PCALGLOBAL pGlobal;
+    CHAR  achValue[ SZENTRY_MAX + 1 ];
+    LONG  cb;
+    PSZ   pszShareMem;
+    ULONG ulRC;
+
+    pGlobal = WinQueryWindowPtr( hwnd, 0 );
+    if ( !pGlobal ) return;
+
+    cb = WinQueryDlgItemText( hwnd, IDD_ENTRY, SZENTRY_MAX+1, achValue );
+    if ( !cb ) return;
+
+    ulRC = WinOpenClipbrd( pGlobal->hab );
+    if ( ulRC ) {
+        WinEmptyClipbrd( pGlobal->hab );
+        if ( 0 == DosAllocSharedMem( (PVOID) &pszShareMem, NULL, cb + 1,
+                                     PAG_READ | PAG_WRITE | PAG_COMMIT | OBJ_GIVEABLE ))
+        {
+            memset( pszShareMem, 0, cb + 1 );
+            strncpy( pszShareMem, achValue, cb );
+            WinSetClipbrdData( pGlobal->hab, (ULONG) pszShareMem, CF_TEXT, CFI_POINTER );
+        }
+        WinCloseClipbrd( pGlobal->hab );
+    }
+}
+
+
+/* ------------------------------------------------------------------------- *
+ * ------------------------------------------------------------------------- */
+void DoPaste( HWND hwnd )
+{
+    PCALGLOBAL pGlobal;
+    PSZ    pszClipText;
+    double dValue;
+
+    pGlobal = WinQueryWindowPtr( hwnd, 0 );
+    if ( !pGlobal ) return;
+
+    if ( WinOpenClipbrd( pGlobal->hab )) {
+        pszClipText = (PSZ) WinQueryClipbrdData( pGlobal->hab, CF_TEXT );
+        if ( pszClipText != NULL ) {
+            if ( sscanf( pszClipText, "%lf", &dValue ) == 1 )
+                SetCurrentValue( hwnd, dValue );
+        }
+        WinCloseClipbrd( pGlobal->hab );
+    }
+}
+
+
+/* ------------------------------------------------------------------------- *
+ * ------------------------------------------------------------------------- */
 void AppendDigit( HWND hwnd, CHAR chNew )
 {
     CHAR achValue[ SZENTRY_MAX + 1 ];
@@ -971,7 +1034,6 @@ void SetCurrentValue( HWND hwnd, double dValue )
     sprintf( achValue, "%G", dValue );
     WinSetDlgItemText( hwnd, IDD_ENTRY, (PSZ) achValue );
     UpdateNotation( hwnd );
-
 }
 
 

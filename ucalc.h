@@ -20,7 +20,7 @@
 // ----------------------------------------------------------------------------
 // CONSTANTS
 
-#define SZ_VERSION              "0.4.0"
+#define SZ_VERSION              "0.5.0"
 #define SZ_COPYRT               "2018"
 
 #define SZ_ABOUT_VERSION        "version %s"
@@ -68,12 +68,12 @@
 // Fonts
 #define SZ_FONT_BUTTON_LG       "12.Helv"
 #define SZ_FONT_SYMBOL_LG       "13.Symbol Set"
-#define SZ_FONT_UNICODE_LG      "12.Arial"          //"14.Times New Roman MT 30"
+#define SZ_FONT_UNICODE_LG      "12.Arial"
 #define SZ_FONT_ENTRY_LG        "12.MMPMDigital"
 #define SZ_FONT_BUTTON_SM       "9.WarpSans"
 #define SZ_FONT_SYMBOL_SM       "10.Symbol Set"
-#define SZ_FONT_UNICODE_SM      "10.Arial"          //"10.Times New Roman MT 30"
-#define SZ_FONT_ENTRY_SM        "12.MMPMDigital"
+#define SZ_FONT_UNICODE_SM      "10.Arial"
+#define SZ_FONT_ENTRY_SM        "10.MMPMDigital"
 
 
 // Custom messages
@@ -176,6 +176,8 @@ void             SetButtonIcon( HWND hwndBtn, USHORT usResID );
 void             SetColourScheme( HWND hwnd, PCALGLOBAL pGlobal );
 void             SetTextSize( HWND hwnd, BOOL fLarge );
 void             SetTopmost( HWND hwnd );
+void             DoCopy( HWND hwnd );
+void             DoPaste( HWND hwnd );
 void             AppendDigit( HWND hwnd, CHAR chNew );
 void             DeleteDigit( HWND hwnd );
 void             FlipSign( HWND hwnd );
