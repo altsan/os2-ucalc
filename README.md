@@ -3,7 +3,11 @@ Useful Calculator for OS/2
 
 _Useful Calculator_ is a simple desktop calculator for OS/2, written
 using the native Presentation Manager API.  It has no external
-dependencies and should work on all OS/2 Warp systems.
+dependencies and should work on all OS/2 Warp systems.  
+
+(This program has been successfully tested on OS/2 Warp version 3.  
+However, Warp 4 or later is recommended so that the `MMPMDigital` font
+is available.)
 
 
 Functionality

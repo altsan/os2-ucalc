@@ -280,6 +280,14 @@ MRESULT EXPENTRY MainWndProc( HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2 )
                     DoPaste( hwnd );
                     break;
 
+                case ID_VIEW_BASIC:
+                case ID_VIEW_SCI:
+                case ID_VIEW_ALL:
+                    break;
+
+                case ID_VIEW_HEX:
+                    break;
+
                 case ID_VIEWONTOP:
                     SetTopmost( hwnd );
                     break;
@@ -341,11 +349,6 @@ MRESULT EXPENTRY MainWndProc( HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2 )
                 WinShowWindow( WinWindowFromID(hwnd, IDD_BITRIGHT), TRUE );
                 WinShowWindow( WinWindowFromID(hwnd, IDD_BITOR),    TRUE );
             }
-            break;
-
-
-        case WM_SIZE:
-            //UpdateWindowSize( hwnd, SHORT1FROMMP(mp2), SHORT2FROMMP(mp2) );
             break;
 
 
@@ -1031,7 +1034,7 @@ void SetCurrentValue( HWND hwnd, double dValue )
 {
     CHAR achValue[ SZENTRY_MAX + 2 ];
 
-    sprintf( achValue, "%G", dValue );
+    snprintf( achValue, SZENTRY_MAX+1, "%.10G", dValue );
     WinSetDlgItemText( hwnd, IDD_ENTRY, (PSZ) achValue );
     UpdateNotation( hwnd );
 }

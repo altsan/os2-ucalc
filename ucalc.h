@@ -9,8 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <uconv.h>
-#include <unidef.h>
+//#include <uconv.h>
+//#include <unidef.h>
 #include "ids.h"
 
 #ifndef WS_TOPMOST
@@ -21,7 +21,7 @@
 // CONSTANTS
 
 #define SZ_VERSION              "0.5.0"
-#define SZ_COPYRT               "2018"
+#define SZ_COPYRT               "2018-2019"
 
 #define SZ_ABOUT_VERSION        "version %s"
 #define SZ_ABOUT_COPYRT         "(C) %s Alexander Taylor"

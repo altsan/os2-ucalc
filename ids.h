@@ -5,10 +5,11 @@
 #define ID_COPY                     62
 #define ID_PASTE                    63
 #define IDM_VIEW                    70
-#define ID_VIEW_HEX                 71
+#define ID_VIEW_BASIC               71
 #define ID_VIEW_SCI                 72
 #define ID_VIEW_ALL                 73
-#define ID_VIEWONTOP                74
+#define ID_VIEW_HEX                 74
+#define ID_VIEWONTOP                77
 #define ID_VIEWSTACK                78
 #define ID_VIEWHISTORY              79
 #define IDM_LOOK                    80
