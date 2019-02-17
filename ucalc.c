@@ -1062,16 +1062,21 @@ void UpdateNotation( HWND hwnd )
     CHAR      achValue[ SZENTRY_MAX + 1 ];
     CHAR      achNotation[ SZENTRY_MAX + 1 ];
     LONG      cb;
+    int       rc;
     long long llValue;
 
     cb = WinQueryDlgItemText( hwnd, IDD_ENTRY, SZENTRY_MAX, achValue );
     if ( !cb ) return;
-    if ( sscanf( achValue, "%lld", &llValue ) != 1 ) return;
+
+    if ( strstr( achValue, "E+") != NULL )
+        rc = sscanf( achValue, "%Lf", &llValue );
+    else
+        rc = sscanf( achValue, "%lld", &llValue );
+    if ( rc != 1 ) return;
 
     if ( llabs( llValue ) > 0xFFFFFFFF )
         sprintf( achNotation, "%016llX", llValue );
     else
-
         sprintf( achNotation, "%08X", (long) llValue );
     WinSetDlgItemText( hwnd, IDD_HEXVALUE, achNotation );
 }
