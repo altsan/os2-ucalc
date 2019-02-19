@@ -1,4 +1,8 @@
 #include "ucalc.h"
+#ifdef USE_EXCEPTQ
+#define INCL_LOADEXCEPTQ
+#include <exceptq.h>
+#endif
 
 
 /* ------------------------------------------------------------------------- *
@@ -19,6 +23,11 @@ int main( int argc, char *argv[] )
     BOOL       fInitFailure = FALSE;
 #ifdef NO_BUTTON_ICONS
     ULONG      cb = 0;
+#endif
+
+#ifdef USE_EXCEPTQ
+    EXCEPTIONREGISTRATIONRECORD exRegRec;
+    LoadExceptq(&exRegRec, "I", "UCalc v1");
 #endif
 
     hab = WinInitialize( 0 );
@@ -110,6 +119,9 @@ int main( int argc, char *argv[] )
     WinDestroyMsgQueue( hmq );
     WinTerminate( hab );
 
+#ifdef USE_EXCEPTQ
+    UninstallExceptq(&exRegRec);
+#endif
     return ( 0 );
 }
 
@@ -404,6 +416,8 @@ void WindowSetup( HWND hwnd )
     // Set the window mini-icon
     hicon = WinLoadPointer( HWND_DESKTOP, 0, ID_UCALC );
     WinSendMsg( hwnd, WM_SETICON, MPFROMP(hicon), MPVOID );
+
+    WinSendDlgItemMsg( hwnd, IDD_ENTRY, EM_SETTEXTLIMIT, MPFROMSHORT( SZENTRY_MAX ), 0 );
 
     // Check for saved INI file settings
     memset( szIni,  0, sizeof(szIni) );
@@ -1032,9 +1046,13 @@ void FlipSign( HWND hwnd )
  * ------------------------------------------------------------------------- */
 void SetCurrentValue( HWND hwnd, double dValue )
 {
-    CHAR achValue[ SZENTRY_MAX + 2 ];
+    CHAR achValue[ SZENTRY_MAX + 1 ];
 
-    snprintf( achValue, SZENTRY_MAX+1, "%.10G", dValue );
+#ifdef __WATCOM__
+    snprintf( achValue, SZENTRY_MAX, "%.10G", dValue );
+#else
+    sprintf( achValue, "%.10G", dValue );
+#endif
     WinSetDlgItemText( hwnd, IDD_ENTRY, (PSZ) achValue );
     UpdateNotation( hwnd );
 }
@@ -1079,6 +1097,7 @@ void UpdateNotation( HWND hwnd )
     else
         sprintf( achNotation, "%08X", (long) llValue );
     WinSetDlgItemText( hwnd, IDD_HEXVALUE, achNotation );
+
 }
 
 
@@ -1141,6 +1160,9 @@ void MemoryClear( PCALGLOBAL pGlobal )
 BOOL DoCalculation( double dRValue, ULONG ulOperator, PCALCULATION pCalc )
 {
     if ( !pCalc ) return FALSE;
+    if (( pCalc->dFactor > LLONG_MAX ) || ( pCalc->dFactor < LLONG_MIN ))
+        return FALSE;
+
     switch ( ulOperator ) {
         case OP_ADD_PLUS:
             pCalc->dCurrent += dRValue;
@@ -1157,7 +1179,7 @@ BOOL DoCalculation( double dRValue, ULONG ulOperator, PCALCULATION pCalc )
             break;
         case OP_MUL_MODULO:
             if ( dRValue == 0 ) return FALSE;
-            pCalc->dFactor = (long)pCalc->dFactor % (long)dRValue;
+            pCalc->dFactor = (long long)pCalc->dFactor % (long long)dRValue;
             break;
         case OP_EXP_POWER:
             pCalc->dEbase = pow( pCalc->dEbase, dRValue );
@@ -1171,19 +1193,19 @@ BOOL DoCalculation( double dRValue, ULONG ulOperator, PCALCULATION pCalc )
                 return FALSE;
             break;
         case OP_BIT_OR:
-            pCalc->dFactor = (long long) pCalc->dFactor | (long long) dRValue;
+            pCalc->dFactor = (long long)(pCalc->dFactor) | (long long) dRValue;
             break;
         case OP_BIT_XOR:
-            pCalc->dFactor = (long long) pCalc->dFactor ^ (long long) dRValue;
+            pCalc->dFactor = (long long)(pCalc->dFactor) ^ (long long) dRValue;
             break;
         case OP_BIT_AND:
-            pCalc->dFactor = (long long) pCalc->dFactor & (long long) dRValue;
+            pCalc->dFactor = (long long)(pCalc->dFactor) & (long long) dRValue;
             break;
         case OP_BIT_LEFT:
-            pCalc->dFactor = (long long) pCalc->dFactor << (long long) dRValue;
+            pCalc->dFactor = (long long)(pCalc->dFactor) << (long long) dRValue;
             break;
         case OP_BIT_RIGHT:
-            pCalc->dFactor = (long long) pCalc->dFactor >> (long long) dRValue;
+            pCalc->dFactor = (long long)(pCalc->dFactor) >> (long long) dRValue;
             break;
         default: return FALSE;
     }

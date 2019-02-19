@@ -1,10 +1,14 @@
 #define INCL_DOSERRORS
+#define INCL_DOSEXCEPTIONS
 #define INCL_DOSMISC
+#define INCL_DOSMODULEMGR
+#define INCL_DOSPROCESS
 #define INCL_DOSRESOURCES
 #define INCL_GPI
 #define INCL_WIN
 #include <os2.h>
 #include <float.h>
+#include <limits.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +20,8 @@
 #ifndef WS_TOPMOST
 #define WS_TOPMOST  0x00200000L
 #endif
+
+// #define USE_EXCEPTQ 1
 
 // ----------------------------------------------------------------------------
 // CONSTANTS
@@ -33,11 +39,11 @@
 #define US_MIN_WIDTH            333
 #define US_MIN_HEIGHT           195
 
-#define MAX_DIGITS              16      // maximum number of digits in entryfield
+#define MAX_DIGITS              22      // maximum number of digits in entryfield
 
 // Maximum string length...
 #define SZRES_MAXZ              256                 // ...of a generic string resource
-#define SZENTRY_MAX             (MAX_DIGITS + 1)    // ...of the entryfield contents
+#define SZENTRY_MAX             (MAX_DIGITS + 4)    // ...of the entryfield contents
 
 
 // Profile (INI) file entries

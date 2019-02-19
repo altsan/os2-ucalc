@@ -15,6 +15,7 @@ MAKEDESC  = makedesc.cmd
 BL_VENDOR = "Alexander Taylor"
 BL_DESC   = "Useful Calculator"
 
+USE_EXCEPTQ = 1
 
 !ifndef DEBUG			# if not defined on wmake command line
 !ifdef %DEBUG			# if defined in environment
@@ -31,13 +32,14 @@ DEBUG = $(%DEBUG)		# use value from environment
 # -bm		multithread libs
 # -bt=os2	target
 # -d2		full debug
+# -fp5		optimize floating point for P5+
 # -q    	quiet
 # -s		disable stack checks
 # -wx		max warnings
 # -zp4		align 4
 # -zq		quiet
 
-CFLAGS = -bm -bt=os2 -q -s -wx -zp4 -zq
+CFLAGS = -bm -bt=os2 -fp5 -q -s -wx -zp4 -zq
 
 # Order dependent flags
 !ifdef DEBUG
@@ -45,7 +47,7 @@ CFLAGS += -d2
 !endif
 
 !ifdef DEBUG
-LFLAGS_DBG = debug dwarf all
+LFLAGS_DBG = debug watcom all
 !endif
 
 NAME   = ucalc
@@ -91,9 +93,6 @@ $(NAME).lrf: $(__MAKEFILES__)
         @%write $^@ description
         @%write $^@ name $(NAME)
         @for %f in ($(OBJS)) do @%append $^*.lrf file %f
-!ifdef USE_EXCEPTQ
-        @%write $^@ file exceptq.lib
-!endif
         @for %f in ($(LIBS)) do @%append $^@ library %f
 
 clean : .SYMBOLIC

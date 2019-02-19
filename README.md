@@ -35,12 +35,20 @@ Mathematical order of operations is observed.  For example, entering
 `5 [+] 2 [×] 3 [xⁿ] 3` will be evaluated as `5 + (2 × 3³)`, yielding a 
 result of `59`.
 
+Values requiring more than 10 significant digits will be displayed in
+exponential notation.
+
+Values beyond the range of ±9223372036854775807 cannot be used as 
+operands; this is a limitation of the integer types used.  Such values
+are supported as final results in some cases, but will (as above) be 
+shown in exponential notation.
+
 
 Notices
 -------
 
     Useful Calculator for OS/2
-    Copyright (C) 2018 Alexander Taylor.
+    Copyright (C) 2018-2019 Alexander Taylor.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

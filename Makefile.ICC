@@ -1,7 +1,7 @@
 # IBM C/C++ (VisualAge) Makefile for UCALC
 
 CC     = icc.exe
-RC     = rc.exe
+RC     = rc16.exe
 LINK   = ilink.exe
 IPFC   = ipfc.exe
 CFLAGS = /Gm /Ss /Wuse      # /Wrea /Wuni
@@ -50,5 +50,5 @@ $(NAME).res : $(NAME).rc $(NAME).dlg ids.h $(ICONS)
 #                 $(IPFC) -d:$(NLV) $< $@
 
 clean       :
-                del $(OBJS) $(NAME).res $(NAME).exe >NUL
+                del $(OBJS) $(NAME).res $(NAME).exe 2>NUL
 
