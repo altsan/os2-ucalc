@@ -5,6 +5,10 @@
 #endif
 
 
+#define LoadStringRes( hab, id, cb, buf ) \
+    ( WinLoadString( hab, NULLHANDLE, pGlobal->ulLangID + id, cb, buf ))
+
+
 /* ------------------------------------------------------------------------- *
  * Main program (including initialization, message loop, and final cleanup)  *
  * ------------------------------------------------------------------------- */
@@ -49,6 +53,7 @@ int main( int argc, char *argv[] )
         memset( &global, 0, sizeof( global ));
         global.hab       = hab;
         global.hmq       = hmq;
+        global.ulLangID  = SetLanguage( hmq );
 
 #ifdef NO_BUTTON_ICONS
         // Set PM codepage to UPF-8 (Unicode)
@@ -123,6 +128,50 @@ int main( int argc, char *argv[] )
     UninstallExceptq(&exRegRec);
 #endif
     return ( 0 );
+}
+
+
+/* ------------------------------------------------------------------------- *
+ * SetLanguage                                                               *
+ *                                                                           *
+ * Get the current base language ID (used for string resource lookup).       *
+ *                                                                           *
+ * ARGUMENTS:                                                                *
+ *   HMQ hmq                                                                 *
+ *                                                                           *
+ * RETURNS: ULONG                                                            *
+ *   The calculated language ID.                                             *
+ * ------------------------------------------------------------------------- */
+ULONG SetLanguage( HMQ hmq )
+{
+    PSZ    pszEnv;
+    USHORT usCC;
+    ULONG  ulCP;
+
+    pszEnv = getenv("LANG");
+    if ( !pszEnv ) return ID_BASE_EN;
+
+    ulCP = WinQueryCp( hmq );
+
+    if ( strnicmp(pszEnv, "EN_", 3 ) == 0 ) usCC = 1;
+    // Can comment out a country's statement to use English for that language.
+    // Note: we only need to check the codepage for languages that don't use 850
+//    else if ( ISRUCODEPG(ulCP) && strnicmp(pszEnv, "RU_", 3 ) == 0 ) usCC = 7;
+//    else if ( strnicmp(pszEnv, "NL_", 3 ) == 0 ) usCC = 31;
+//    else if ( strnicmp(pszEnv, "FR_", 3 ) == 0 ) usCC = 33;
+//    else if ( strnicmp(pszEnv, "ES_", 3 ) == 0 ) usCC = 34;
+//    else if ( strnicmp(pszEnv, "IT_", 3 ) == 0 ) usCC = 39;
+//    else if ( strnicmp(pszEnv, "SV_", 3 ) == 0 ) usCC = 46;
+//    else if ( strnicmp(pszEnv, "DE_", 3 ) == 0 ) usCC = 49;
+    else if ( ISJPCODEPG(ulCP) && strnicmp(pszEnv, "JA_", 3 ) == 0 ) usCC = 81;
+//    else if ( ISKOCODEPG(ulCP) && strnicmp(pszEnv, "KO_", 3 ) == 0 ) usCC = 82;
+//    else if ( ISCNCODEPG(ulCP) && (( strnicmp(pszEnv, "ZH_CN", 5 ) == 0 ) ||
+//                                   ( strnicmp(pszEnv, "ZH_SG", 5 ) == 0 ))) usCC = 86;
+//    else if ( ISTWCODEPG(ulCP) && (( strnicmp(pszEnv, "ZH_TW", 5 ) == 0 ) ||
+//                                   ( strnicmp(pszEnv, "ZH_HK", 5 ) == 0 ))) usCC = 88;
+    else usCC = 1;
+
+    return (usCC * 100) + 10000;
 }
 
 
@@ -331,7 +380,7 @@ MRESULT EXPENTRY MainWndProc( HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2 )
                     break;
 
                 case ID_ABOUT:                  // Product information dialog
-                    WinDlgBox( HWND_DESKTOP, hwnd, (PFNWP) AboutDlgProc, 0, IDD_ABOUT, NULL );
+                    WinDlgBox( HWND_DESKTOP, hwnd, (PFNWP) AboutDlgProc, 0, IDD_ABOUT, pGlobal );
                     break;
 
                 case ID_EXIT:                   // Exit the program
@@ -398,8 +447,10 @@ void WindowSetup( HWND hwnd )
 {
     PCALGLOBAL pGlobal;                 // global data
     HPOINTER   hicon;                   // main application icon
+    HWND       hwndMenu;                // menu handle
     CHAR       szIni[ CCHMAXPATH ],     // name of program INI file
-               szFont[ FACESIZE+5 ];    // last used font (from INI)
+               szFont[ FACESIZE+5 ],    // last used font (from INI)
+               szResource[ SZRES_MAXZ ];// string resource buffer
     LONG       x  = 0,                  // window position values (from INI)
                y  = 0,
                cx = 0,
@@ -410,8 +461,53 @@ void WindowSetup( HWND hwnd )
     pGlobal = WinQueryWindowPtr( hwnd, 0 );
 
     // Load the menu-bar
-    WinLoadMenu( hwnd, 0, ID_UCALC );
+    hwndMenu = WinLoadMenu( hwnd, 0, ID_UCALC );
+
+    // Update the menu text for the current language (not necessary for English)
+    if ( pGlobal->ulLangID != ID_BASE_EN ) {
+
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_FILE, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( IDM_FILE ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_FILE_EXIT, SZRES_MAXZ-1, szResource )) {
+            strncat( szResource, "\tF3", SZRES_MAXZ-1 );
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_EXIT ), MPFROMP( szResource ));
+        }
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_EDIT, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( IDM_EDIT ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_EDIT_COPY, SZRES_MAXZ-1, szResource )) {
+            strncat( szResource, "\tCtrl+Ins", SZRES_MAXZ-1 );
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_COPY ), MPFROMP( szResource ));
+        }
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_EDIT_PASTE, SZRES_MAXZ-1, szResource )) {
+            strncat( szResource, "\tShift+Ins", SZRES_MAXZ-1 );
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_PASTE ), MPFROMP( szResource ));
+        }
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_VIEW, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( IDM_VIEW ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_VIEW_APPEARANCE, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( IDM_LOOK ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_VIEW_SMALL, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_SMALL ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_VIEW_LARGE, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_LARGE ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_VIEW_COLOUR, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_CLRLIGHT ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_VIEW_MONOCHROME, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_CLRMONO ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_VIEW_ONTOP, SZRES_MAXZ-1, szResource )) {
+            strncat( szResource, "\tCtrl+T", SZRES_MAXZ-1 );
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_VIEWONTOP ), MPFROMP( szResource ));
+        }
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_HELP, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( IDM_HELP ), MPFROMP( szResource ));
+        if ( LoadStringRes( pGlobal->hab, IDS_MENU_HELP_ABOUT, SZRES_MAXZ-1, szResource ))
+            WinSendMsg( hwndMenu, MM_SETITEMTEXT, MPFROMSHORT( ID_ABOUT ), MPFROMP( szResource ));
+    }
     WinSendMsg( hwnd, WM_UPDATEFRAME, (MPARAM) FCF_MENU, MPVOID );
+
+    // Also set the program window title
+    if ( LoadStringRes( pGlobal->hab, IDS_PROGRAM_TITLE, SZRES_MAXZ-1, szResource ))
+        WinSetWindowText( hwnd, szResource );
 
     // Set the window mini-icon
     hicon = WinLoadPointer( HWND_DESKTOP, 0, ID_UCALC );
@@ -633,13 +729,22 @@ MRESULT EXPENTRY PanelProc( HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2 )
  * ------------------------------------------------------------------------- */
 MRESULT EXPENTRY AboutDlgProc( HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2 )
 {
-    CHAR szBuffer[ SZRES_MAXZ ];
+    static PCALGLOBAL pGlobal;
+    CHAR szBuffer[ SZRES_MAXZ ],
+         szResource[ SZRES_MAXZ ];
 
     switch ( msg ) {
 
         case WM_INITDLG:
-            sprintf( szBuffer, SZ_ABOUT_VERSION, SZ_VERSION );
-            WinSetDlgItemText( hwnd, IDD_ABOUT_VERSION, szBuffer );
+            pGlobal = (PCALGLOBAL) mp2;
+            if ( LoadStringRes( pGlobal->hab, IDS_PRODUCT_INFORMATION, SZRES_MAXZ-1, szResource ))
+                WinSetWindowText( hwnd, szResource );
+            if ( LoadStringRes( pGlobal->hab, IDS_PROGRAM_DESCRIPTION, SZRES_MAXZ-1, szResource ))
+                WinSetDlgItemText( hwnd, IDD_ABOUT_DESC, szResource );
+            if ( LoadStringRes( pGlobal->hab, IDS_VERSION, SZRES_MAXZ-1, szResource )) {
+                sprintf( szBuffer, szResource, SZ_VERSION );
+                WinSetDlgItemText( hwnd, IDD_ABOUT_VERSION, szBuffer );
+            }
             sprintf( szBuffer, SZ_ABOUT_COPYRT, SZ_COPYRT );
             WinSetDlgItemText( hwnd, IDD_ABOUT_COPYRT, szBuffer );
             CentreWindow( hwnd );
@@ -1269,7 +1374,8 @@ BOOL OperationAdditive( HWND hwnd, USHORT usControl, PCALCULATION pCalc )
     switch ( usControl ) {
         case IDD_PLUS:  ulAction = OP_ADD_PLUS;  break;
         case IDD_MINUS: ulAction = OP_ADD_MINUS; break;
-        default: ErrorPopup("Undefined operation");
+        default:
+            ErrorPopup("Undefined operation");
             return FALSE;
     }
 

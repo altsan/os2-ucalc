@@ -30,6 +30,7 @@ ICON 39             "graphics\\ln_l.ico"
 ICON 40             "graphics\\ex_l.ico"
 #endif
 
+
 MENU ID_UCALC
 BEGIN
     SUBMENU "~File",                                IDM_FILE,           MIS_TEXT
@@ -107,6 +108,72 @@ BEGIN
     "t",          ID_VIEWONTOP, CHAR,       CONTROL
     "T",          ID_VIEWONTOP, CHAR,       CONTROL
 END
+
+
+
+/********************
+ * ENGLISH MESSAGES
+ */
+
+STRINGTABLE 850
+BEGIN
+    (ID_BASE_EN + IDS_PROGRAM_TITLE)        "Calculator"
+    (ID_BASE_EN + IDS_PROGRAM_DESCRIPTION)  "Useful Calculator for OS/2"
+    (ID_BASE_EN + IDS_PRODUCT_INFORMATION)  "Product Information"
+    (ID_BASE_EN + IDS_VERSION)              "version %s"
+//    (ID_BASE_EN + IDS_UNDEFINED_OPERATION)  "Undefined operation"
+END
+
+STRINGTABLE 850
+BEGIN
+    (ID_BASE_EN + IDS_MENU_FILE)            "~File"
+    (ID_BASE_EN + IDS_MENU_FILE_EXIT)       "E~xit"
+    (ID_BASE_EN + IDS_MENU_EDIT)            "~Edit"
+    (ID_BASE_EN + IDS_MENU_EDIT_COPY)       "~Copy"
+    (ID_BASE_EN + IDS_MENU_EDIT_PASTE)      "~Paste"
+    (ID_BASE_EN + IDS_MENU_VIEW)            "~View"
+    (ID_BASE_EN + IDS_MENU_VIEW_APPEARANCE) "~Appearance"
+    (ID_BASE_EN + IDS_MENU_VIEW_SMALL)      "~Small text"
+    (ID_BASE_EN + IDS_MENU_VIEW_LARGE)      "~Large text"
+    (ID_BASE_EN + IDS_MENU_VIEW_COLOUR)     "~Colour"
+    (ID_BASE_EN + IDS_MENU_VIEW_MONOCHROME) "~Monochrome"
+    (ID_BASE_EN + IDS_MENU_VIEW_ONTOP)      "Always on ~top"
+    (ID_BASE_EN + IDS_MENU_HELP)            "~Help"
+    (ID_BASE_EN + IDS_MENU_HELP_ABOUT)      "Product ~information"
+END
+
+
+/********************
+ * JAPANESE MESSAGES
+ */
+
+STRINGTABLE 932
+BEGIN
+    (ID_BASE_JA + IDS_PROGRAM_TITLE)        "電卓"
+    (ID_BASE_JA + IDS_PROGRAM_DESCRIPTION)  "Useful Calculator for OS/2"
+    (ID_BASE_JA + IDS_PRODUCT_INFORMATION)  "製品情報"
+    (ID_BASE_JA + IDS_VERSION)              "ﾊﾞｰｼﾞｮﾝ %s"
+//    (ID_BASE_JA + IDS_UNDEFINED_OPERATION)  "不明な操作"
+END
+
+STRINGTABLE 932
+BEGIN
+    (ID_BASE_JA + IDS_MENU_FILE)            "ファイル (~F)"
+    (ID_BASE_JA + IDS_MENU_FILE_EXIT)       "終了(~X)"
+    (ID_BASE_JA + IDS_MENU_EDIT)            "編集 (~E)"
+    (ID_BASE_JA + IDS_MENU_EDIT_COPY)       "コピー (~C)"
+    (ID_BASE_JA + IDS_MENU_EDIT_PASTE)      "貼付け (~P)"
+    (ID_BASE_JA + IDS_MENU_VIEW)            "表示 (~V)"
+    (ID_BASE_JA + IDS_MENU_VIEW_APPEARANCE) "外観 (~A)"
+    (ID_BASE_JA + IDS_MENU_VIEW_SMALL)      "小テキスト (~S)"
+    (ID_BASE_JA + IDS_MENU_VIEW_LARGE)      "大テキスト (~L)"
+    (ID_BASE_JA + IDS_MENU_VIEW_COLOUR)     "カラー (~C)"
+    (ID_BASE_JA + IDS_MENU_VIEW_MONOCHROME) "モノクロ (~M)"
+    (ID_BASE_JA + IDS_MENU_VIEW_ONTOP)      "常に手前に表示 (~T)"
+    (ID_BASE_JA + IDS_MENU_HELP)            "ヘルプ (~H)"
+    (ID_BASE_JA + IDS_MENU_HELP_ABOUT)      "製品情報 (~I)"
+END
+
 
 RCINCLUDE ucalc.dlg
 

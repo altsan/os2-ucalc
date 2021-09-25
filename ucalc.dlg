@@ -10,7 +10,7 @@ BEGIN
     BEGIN
         ICON            ID_UCALC, -1, 7, 42, 20, 16
         DEFPUSHBUTTON   "OK", DID_OK, 38, 2, 40, 12
-        LTEXT           "Useful Calculator for OS/2", -1, 38, 59, 150, 8
+        LTEXT           "Useful Calculator for OS/2", IDD_ABOUT_DESC, 38, 59, 150, 8
         LTEXT           "version x.y", IDD_ABOUT_VERSION, 38, 50, 150, 8
         GROUPBOX        "", -1, 38, 47, 150, 4
         LTEXT           "(C) yyyy Alex Taylor", IDD_ABOUT_COPYRT, 38, 35, 150, 8

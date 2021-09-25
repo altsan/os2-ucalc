@@ -26,10 +26,10 @@
 // ----------------------------------------------------------------------------
 // CONSTANTS
 
-#define SZ_VERSION              "0.5.0"
-#define SZ_COPYRT               "2018-2019"
+#define SZ_VERSION              "0.6.0"
+#define SZ_COPYRT               "2018-2021"
 
-#define SZ_ABOUT_VERSION        "version %s"
+//#define SZ_ABOUT_VERSION        "version %s"
 #define SZ_ABOUT_COPYRT         "(C) %s Alexander Taylor"
 
 #define HELP_FILE               "ucalc.hlp"
@@ -125,6 +125,12 @@
 #define BYTES2UNICHAR( bFirst, bSecond ) \
     (( bFirst << 8 ) | bSecond )
 
+// Indicates codepages compatible with a given language
+#define ISRUCODEPG( cp )    ( cp == 866 )
+#define ISJPCODEPG( cp )    ( cp == 932 || cp == 942 || cp == 943 )
+#define ISKOCODEPG( cp )    ( cp == 949 )
+#define ISTWCODEPG( cp )    ( cp == 950 )
+#define ISCNCODEPG( cp )    ( cp == 1381 || cp == 1386 )
 
 // ----------------------------------------------------------------------------
 // TYPEDEFS
@@ -149,6 +155,7 @@ typedef struct _Global_Data {
     CHAR   szBtnFont[ FACESIZE+5 ];  // current button font
     CHAR   szNumFont[ FACESIZE+5 ];  // current number panel font
     CHAR   szSymFont[ FACESIZE+5 ];  // font used for certain symbol buttons
+    ULONG  ulLangID;                 // base language resource ID
     ULONG  flStyle;                  // current style flags
     BOOL   fHexMode;                 // are we in hex mode? (not implemented)
 #ifdef NO_BUTTON_ICONS
@@ -171,6 +178,7 @@ PFNWP pfnButtonProc;                // Default WC_BUTTON window procedure
 // FUNCTIONS
 
 MRESULT EXPENTRY MainWndProc( HWND, ULONG, MPARAM, MPARAM );
+ULONG            SetLanguage( HMQ hmq );
 void             WindowSetup( HWND hwnd );
 void             CentreWindow( HWND hwnd );
 void             LocateProfile( PSZ pszProfile );

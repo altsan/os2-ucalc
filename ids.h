@@ -86,5 +86,45 @@
 #define IDD_ABOUT                   900
 #define IDD_ABOUT_VERSION           901
 #define IDD_ABOUT_COPYRT            902
+#define IDD_ABOUT_DESC              903
 
+
+// NLV base numbers (these are all 100 * country code + 10000)
+
+#define ID_BASE_EN                  10100       // English
+#define ID_BASE_RU                  10700       // Russian
+#define ID_BASE_NL                  13100       // Dutch
+#define ID_BASE_FR                  13300       // French
+#define ID_BASE_ES                  13400       // Spanish
+#define ID_BASE_IT                  13900       // Italian
+#define ID_BASE_SV                  14600       // Swedish
+#define ID_BASE_DE                  14900       // German
+#define ID_BASE_JA                  18100       // Japanese
+#define ID_BASE_KO                  18200       // Korean
+#define ID_BASE_CN                  18600       // Simplified Chinese
+#define ID_BASE_TW                  18800       // Traditional Chinese
+
+
+// String resource ID offsets (these will be added to the NLV base number)
+
+#define IDS_PROGRAM_TITLE           10
+#define IDS_PROGRAM_DESCRIPTION     11
+#define IDS_PRODUCT_INFORMATION     12
+#define IDS_VERSION                 13
+#define IDS_UNDEFINED_OPERATION     19
+
+#define IDS_MENU_FILE               20
+#define IDS_MENU_FILE_EXIT          21
+#define IDS_MENU_EDIT               30
+#define IDS_MENU_EDIT_COPY          31
+#define IDS_MENU_EDIT_PASTE         32
+#define IDS_MENU_VIEW               40
+#define IDS_MENU_VIEW_APPEARANCE    41
+#define IDS_MENU_VIEW_SMALL         42
+#define IDS_MENU_VIEW_LARGE         43
+#define IDS_MENU_VIEW_COLOUR        44
+#define IDS_MENU_VIEW_MONOCHROME    45
+#define IDS_MENU_VIEW_ONTOP         46
+#define IDS_MENU_HELP               50
+#define IDS_MENU_HELP_ABOUT         59
 
