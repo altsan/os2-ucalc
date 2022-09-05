@@ -156,7 +156,7 @@ ULONG SetLanguage( HMQ hmq )
     if ( strnicmp(pszEnv, "EN_", 3 ) == 0 ) usCC = 1;
     // Can comment out a country's statement to use English for that language.
     // Note: we only need to check the codepage for languages that don't use 850
-//    else if ( ISRUCODEPG(ulCP) && strnicmp(pszEnv, "RU_", 3 ) == 0 ) usCC = 7;
+    else if ( ISRUCODEPG(ulCP) && strnicmp(pszEnv, "RU_", 3 ) == 0 ) usCC = 7;
 //    else if ( strnicmp(pszEnv, "NL_", 3 ) == 0 ) usCC = 31;
 //    else if ( strnicmp(pszEnv, "FR_", 3 ) == 0 ) usCC = 33;
 //    else if ( strnicmp(pszEnv, "ES_", 3 ) == 0 ) usCC = 34;

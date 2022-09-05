@@ -175,5 +175,36 @@ BEGIN
 END
 
 
+/********************
+ * RUSSIAN MESSAGES
+ */
+
+STRINGTABLE 866
+BEGIN
+    (ID_BASE_RU + IDS_PROGRAM_TITLE)        "Калькулятор"
+    (ID_BASE_RU + IDS_PROGRAM_DESCRIPTION)  "Неплохой калькулятор для OS/2"
+    (ID_BASE_RU + IDS_PRODUCT_INFORMATION)  "Информация о продукте"
+    (ID_BASE_RU + IDS_VERSION)              "версия %s"
+//    (ID_BASE_RU + IDS_UNDEFINED_OPERATION)  "Неопределённая операция"
+END
+
+STRINGTABLE 866
+BEGIN
+    (ID_BASE_RU + IDS_MENU_FILE)            "~Файл"
+    (ID_BASE_RU + IDS_MENU_FILE_EXIT)       "В~ыход"
+    (ID_BASE_RU + IDS_MENU_EDIT)            "~Редактировать"
+    (ID_BASE_RU + IDS_MENU_EDIT_COPY)       "~Копировать"
+    (ID_BASE_RU + IDS_MENU_EDIT_PASTE)      "~Вставить"
+    (ID_BASE_RU + IDS_MENU_VIEW)            "~Вид"
+    (ID_BASE_RU + IDS_MENU_VIEW_APPEARANCE) "~Оформление"
+    (ID_BASE_RU + IDS_MENU_VIEW_SMALL)      "~Маленький текст"
+    (ID_BASE_RU + IDS_MENU_VIEW_LARGE)      "~Большой текст"
+    (ID_BASE_RU + IDS_MENU_VIEW_COLOUR)     "~Цветной"
+    (ID_BASE_RU + IDS_MENU_VIEW_MONOCHROME) "~Монохромный"
+    (ID_BASE_RU + IDS_MENU_VIEW_ONTOP)      "Всегда ~сверху"
+    (ID_BASE_RU + IDS_MENU_HELP)            "~Справка"
+    (ID_BASE_RU + IDS_MENU_HELP_ABOUT)      "Информация о ~продукте"
+END
+
 RCINCLUDE ucalc.dlg
 

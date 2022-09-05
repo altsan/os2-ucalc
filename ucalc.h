@@ -26,8 +26,8 @@
 // ----------------------------------------------------------------------------
 // CONSTANTS
 
-#define SZ_VERSION              "0.6.0"
-#define SZ_COPYRT               "2018-2021"
+#define SZ_VERSION              "0.6.1"
+#define SZ_COPYRT               "2018-2022"
 
 //#define SZ_ABOUT_VERSION        "version %s"
 #define SZ_ABOUT_COPYRT         "(C) %s Alexander Taylor"
