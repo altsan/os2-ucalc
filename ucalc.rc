@@ -144,6 +144,69 @@ END
 
 
 /********************
+ * RUSSIAN MESSAGES
+ */
+
+STRINGTABLE 866
+BEGIN
+    (ID_BASE_RU + IDS_PROGRAM_TITLE)        "Калькулятор"
+    (ID_BASE_RU + IDS_PROGRAM_DESCRIPTION)  "Неплохой калькулятор для OS/2"
+    (ID_BASE_RU + IDS_PRODUCT_INFORMATION)  "Информация о продукте"
+    (ID_BASE_RU + IDS_VERSION)              "версия %s"
+//    (ID_BASE_RU + IDS_UNDEFINED_OPERATION)  "Неопределённая операция"
+END
+
+STRINGTABLE 866
+BEGIN
+    (ID_BASE_RU + IDS_MENU_FILE)            "~Файл"
+    (ID_BASE_RU + IDS_MENU_FILE_EXIT)       "В~ыход"
+    (ID_BASE_RU + IDS_MENU_EDIT)            "~Редактировать"
+    (ID_BASE_RU + IDS_MENU_EDIT_COPY)       "~Копировать"
+    (ID_BASE_RU + IDS_MENU_EDIT_PASTE)      "~Вставить"
+    (ID_BASE_RU + IDS_MENU_VIEW)            "~Вид"
+    (ID_BASE_RU + IDS_MENU_VIEW_APPEARANCE) "~Оформление"
+    (ID_BASE_RU + IDS_MENU_VIEW_SMALL)      "~Маленький текст"
+    (ID_BASE_RU + IDS_MENU_VIEW_LARGE)      "~Большой текст"
+    (ID_BASE_RU + IDS_MENU_VIEW_COLOUR)     "~Цветной"
+    (ID_BASE_RU + IDS_MENU_VIEW_MONOCHROME) "~Монохромный"
+    (ID_BASE_RU + IDS_MENU_VIEW_ONTOP)      "Всегда ~сверху"
+    (ID_BASE_RU + IDS_MENU_HELP)            "~Справка"
+    (ID_BASE_RU + IDS_MENU_HELP_ABOUT)      "Информация о ~продукте"
+END
+
+
+/********************
+ * ITALIAN MESSAGES
+ */
+
+STRINGTABLE 850
+BEGIN
+    (ID_BASE_IT + IDS_PROGRAM_TITLE)        "Calcolatrice"
+    (ID_BASE_IT + IDS_PROGRAM_DESCRIPTION)  "Utile Calcolatrice per OS/2"
+    (ID_BASE_IT + IDS_PRODUCT_INFORMATION)  "Informazioni"
+    (ID_BASE_IT + IDS_VERSION)              "versione %s"
+//    (ID_BASE_IT + IDS_UNDEFINED_OPERATION)  "Undefined operation"
+END
+
+STRINGTABLE 850
+BEGIN
+    (ID_BASE_IT + IDS_MENU_FILE)            "~File"
+    (ID_BASE_IT + IDS_MENU_FILE_EXIT)       "E~sci"
+    (ID_BASE_IT + IDS_MENU_EDIT)            "~Modifica"
+    (ID_BASE_IT + IDS_MENU_EDIT_COPY)       "~Copia"
+    (ID_BASE_IT + IDS_MENU_EDIT_PASTE)      "~Incolla"
+    (ID_BASE_IT + IDS_MENU_VIEW)            "~Vista"
+    (ID_BASE_IT + IDS_MENU_VIEW_APPEARANCE) "~Aspetto"
+    (ID_BASE_IT + IDS_MENU_VIEW_SMALL)      "Testo ~piccolo"
+    (ID_BASE_IT + IDS_MENU_VIEW_LARGE)      "Testo g~rande"
+    (ID_BASE_IT + IDS_MENU_VIEW_COLOUR)     "C~olore"
+    (ID_BASE_IT + IDS_MENU_VIEW_MONOCHROME) "~Monocromatico"
+    (ID_BASE_IT + IDS_MENU_VIEW_ONTOP)      "S~empre in primo piano"
+    (ID_BASE_IT + IDS_MENU_HELP)            "~Guida"
+    (ID_BASE_IT + IDS_MENU_HELP_ABOUT)      "~Informazioni"
+END
+
+/********************
  * JAPANESE MESSAGES
  */
 
@@ -174,37 +237,6 @@ BEGIN
     (ID_BASE_JA + IDS_MENU_HELP_ABOUT)      "Р╗ХiПюХё (~I)"
 END
 
-
-/********************
- * RUSSIAN MESSAGES
- */
-
-STRINGTABLE 866
-BEGIN
-    (ID_BASE_RU + IDS_PROGRAM_TITLE)        "Калькулятор"
-    (ID_BASE_RU + IDS_PROGRAM_DESCRIPTION)  "Неплохой калькулятор для OS/2"
-    (ID_BASE_RU + IDS_PRODUCT_INFORMATION)  "Информация о продукте"
-    (ID_BASE_RU + IDS_VERSION)              "версия %s"
-//    (ID_BASE_RU + IDS_UNDEFINED_OPERATION)  "Неопределённая операция"
-END
-
-STRINGTABLE 866
-BEGIN
-    (ID_BASE_RU + IDS_MENU_FILE)            "~Файл"
-    (ID_BASE_RU + IDS_MENU_FILE_EXIT)       "В~ыход"
-    (ID_BASE_RU + IDS_MENU_EDIT)            "~Редактировать"
-    (ID_BASE_RU + IDS_MENU_EDIT_COPY)       "~Копировать"
-    (ID_BASE_RU + IDS_MENU_EDIT_PASTE)      "~Вставить"
-    (ID_BASE_RU + IDS_MENU_VIEW)            "~Вид"
-    (ID_BASE_RU + IDS_MENU_VIEW_APPEARANCE) "~Оформление"
-    (ID_BASE_RU + IDS_MENU_VIEW_SMALL)      "~Маленький текст"
-    (ID_BASE_RU + IDS_MENU_VIEW_LARGE)      "~Большой текст"
-    (ID_BASE_RU + IDS_MENU_VIEW_COLOUR)     "~Цветной"
-    (ID_BASE_RU + IDS_MENU_VIEW_MONOCHROME) "~Монохромный"
-    (ID_BASE_RU + IDS_MENU_VIEW_ONTOP)      "Всегда ~сверху"
-    (ID_BASE_RU + IDS_MENU_HELP)            "~Справка"
-    (ID_BASE_RU + IDS_MENU_HELP_ABOUT)      "Информация о ~продукте"
-END
 
 RCINCLUDE ucalc.dlg
 
