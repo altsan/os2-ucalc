@@ -176,6 +176,38 @@ END
 
 
 /********************
+ * SPANISH MESSAGES
+ */
+
+STRINGTABLE 850
+BEGIN
+    (ID_BASE_ES + IDS_PROGRAM_TITLE)        "Calculadora"
+    (ID_BASE_ES + IDS_PROGRAM_DESCRIPTION)  "Calculadora £til para OS/2"
+    (ID_BASE_ES + IDS_PRODUCT_INFORMATION)  "Informaci¢n del producto"
+    (ID_BASE_ES + IDS_VERSION)              "versi¢n %s"
+//    (ID_BASE_ES + IDS_UNDEFINED_OPERATION)  "Undefined operation"
+END
+
+STRINGTABLE 850
+BEGIN
+    (ID_BASE_ES + IDS_MENU_FILE)            "~Archivo"
+    (ID_BASE_ES + IDS_MENU_FILE_EXIT)       "~Salir"
+    (ID_BASE_ES + IDS_MENU_EDIT)            "~Editar"
+    (ID_BASE_ES + IDS_MENU_EDIT_COPY)       "~Copiar"
+    (ID_BASE_ES + IDS_MENU_EDIT_PASTE)      "~Pegar"
+    (ID_BASE_ES + IDS_MENU_VIEW)            "~Ver"
+    (ID_BASE_ES + IDS_MENU_VIEW_APPEARANCE) "~Apariencia"
+    (ID_BASE_ES + IDS_MENU_VIEW_SMALL)      "Texto ~peque¤o"
+    (ID_BASE_ES + IDS_MENU_VIEW_LARGE)      "Texto ~grande"
+    (ID_BASE_ES + IDS_MENU_VIEW_COLOUR)     "~Color"
+    (ID_BASE_ES + IDS_MENU_VIEW_MONOCHROME) "~Monocromo"
+    (ID_BASE_ES + IDS_MENU_VIEW_ONTOP)      "Siempre en ~primer plano"
+    (ID_BASE_ES + IDS_MENU_HELP)            "~Ayuda"
+    (ID_BASE_ES + IDS_MENU_HELP_ABOUT)      "~Informaci¢n del producto"
+END
+
+
+/********************
  * ITALIAN MESSAGES
  */
 
