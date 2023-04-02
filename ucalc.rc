@@ -202,7 +202,7 @@ BEGIN
     (ID_BASE_ES + IDS_MENU_VIEW_COLOUR)     "~Color"
     (ID_BASE_ES + IDS_MENU_VIEW_MONOCHROME) "~Monocromo"
     (ID_BASE_ES + IDS_MENU_VIEW_ONTOP)      "Siempre en ~primer plano"
-    (ID_BASE_ES + IDS_MENU_HELP)            "~Ayuda"
+    (ID_BASE_ES + IDS_MENU_HELP)            "A~yuda"
     (ID_BASE_ES + IDS_MENU_HELP_ABOUT)      "~Informaci¢n del producto"
 END
 
